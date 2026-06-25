@@ -1,5 +1,5 @@
 import random
-
+#test edit
 def main():
     shoe_count = 6 #standard Casions have 6 shoes
     values = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'] #values
