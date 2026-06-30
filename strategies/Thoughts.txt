@@ -18,4 +18,6 @@ Dealer is 'busting' more often. This is most likely the because smaller hands
 The next step in improving this would to be add that in Black Jack you are able to view the first card
 the Dealer is dealt with. Including this into our general strategy will most likely increase the win rate.
 
+After reviewing and making some other strategies this way of manually finding the optimal solution is way to tiring, espically when considering splitting doubling and dealer visibilty card has not been yet implemented yet. Because of this I am switching this project to a genetic Algorithim approach to converge to the optimal strategy, this will make is also easier when adding doublinh and splitting.
+
 
