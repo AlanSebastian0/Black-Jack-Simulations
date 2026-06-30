@@ -1,0 +1,21 @@
+Here are the results based of the 5 simple strategies
+Please enter the number of trials that you wish to have: 1000000
+
+Strategy                   Wins   Losses     Ties    Win %   Loss %
+------------------------------------------------------------------
+Stand 15+               420,467  496,341   83,192   42.05%   49.63%
+Stand 16+               418,166  491,775   90,059   41.82%   49.18%
+Copycat (Stand 17+)     411,322  490,527   98,151   41.13%   49.05%
+Stand 18+               402,646  514,415   82,939   40.26%   51.44%
+Stand 19+               365,043  567,835   67,122   36.50%   56.78%
+
+Here we can see that the most the strategy that wins without considering the Dealers visible card or spliting
+or doubling the stand on 15 or more has the highest win rate, followed closely by stand16. In summary we can see that standing
+on lower numbers generally results in an increase in win rate. This is likely due to the fact that the 
+Dealer is 'busting' more often. This is most likely the because smaller hands
+
+
+The next step in improving this would to be add that in Black Jack you are able to view the first card
+the Dealer is dealt with. Including this into our general strategy will most likely increase the win rate.
+
+

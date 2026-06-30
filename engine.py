@@ -12,6 +12,10 @@ def build_deck(): #builds a deck of list
 def is_blackjack(cards: list):
     return len(cards) == 2 and get_score(cards) == 21 #checks if its black jack for the beginning
 
+
+def Dealer_AI(score: int) -> str: #the constant Dealer AI common amongst most casinos
+    return "S" if score >= 17 else "H"
+
 def get_score(cards: list):
     score = 0
     ace_count = 0
@@ -27,3 +31,10 @@ def get_score(cards: list):
         score -= 10
         ace_count -= 1
     return score
+def visible_card_score(card: str) -> int:
+    if card == "A":
+        return 11
+    elif card in ["J","Q","K"]:
+        return 10
+    else:
+        return int(card)
