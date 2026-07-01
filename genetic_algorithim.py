@@ -54,21 +54,59 @@ def dna_win_rate(dna: dict ,trials: int) -> int:
 def main():
     population = 100
     trials = 1000
+    generation = 10
+    cutoff = 20 #the cut off is 20% only the top 20% are able to bread
     win_rates = []
+    new_dna = []
+    selection = []
     dna = [create_dna() for i in range(population)] #create a list of the DNA, the amount is given by the population
-    for i in range(population):
-        win_rates.append((dna_win_rate(dna[i],trials),i))
-    win_rates.sort()
-    win_rates.reverse()
-    selection = win_rates[:20] #first top 25 are chosen
-    crossover_point = random.randint(1,169) #dna has 170 genes, 169 beccause inclusive and list is 0 index based
+    win_rates = []
+    best_win_rate = 0.00
+    best_dna = {}
+    while generation != 0:
+        win_rates.clear()
+        for i in range(population):
+            win_rates.append((dna_win_rate(dna[i],trials),i))
+        win_rates.sort()
+        win_rates.reverse()
+        print(f"Best win_rate of {abs(generation-10)}: {win_rates[0][0]/trials:.2f}")
+        if (win_rates[0][0] / trials) * 100 > best_win_rate: #record the best win rate so far and the coressponding strategy
+            best_win_rate = (win_rates[0][0] / trials) * 100
+            best_dna = dict(dna[win_rates[0][1]]) #stores the best dna so far making sure it is a copy by using dict() win_rates also stores the index that is how the best dna is picked
+        selection.clear()
+        selection = win_rates[:cutoff] #first top 20 are chosen
+        new_dna.clear()
+        for i in range(cutoff):
+            new_dna.append(dna[selection[i][1]]) #new dna now conains the new top 20
+        pop_need = population - cutoff #the population needed to replace the perctanage that was not chosen
+        while pop_need != 0:
+            parent1_index = random.randint(0,cutoff-1) #picks random 2 parents
+            parent2_index = random.randint(0,cutoff-1)
+            child = crossover(new_dna[parent1_index], new_dna[parent2_index])
+            mutation(child, mutation_rate=1) #mutation rate is 1%
+            new_dna.append(child) #child is a now a new gene
+            pop_need -= 1
+        dna.clear()
+        dna = list(new_dna) #repeat the cycle 
+        print(f"Current generation is {abs(generation-10)}")
+        generation -= 1
+    print(f"The best win rate is {best_win_rate:.2f}")
+    print(f"The winning dna was {best_dna}")
 
-def crossover(parent1: dict, parent2: dict, crossover_point: int) -> dict:
+def crossover(parent1: dict, parent2: dict)  -> dict:
+    crossover_point = random.randint(1,169) #dna has 170 genes, 169 beccause inclusive and list is 0 index based, randomly select the point to swap parents dna
     first_half_dna = dict(islice(parent1.items(),0,crossover_point)) #create a dictionary dna from 0 to crossover_point
     second_half_dna = dict(islice(parent2.items(),crossover_point,None)) #start at crossover_point to end which is None to make second half od the dna
     dna_child = first_half_dna | second_half_dna #union that megers to the 'half' dictionaries to form complete new dna that iis a mesh of the parents
     return dna_child
 
+def mutation(dna: dict,mutation_rate: int):
+    for cards,action in dna.items():
+        if random.randint(1,100) <= mutation_rate:
+            if dna[cards] == "H":
+                dna[cards] = "S"
+            else:
+                dna[cards] = "H"
 
 if __name__ == "__main__":
     main()
